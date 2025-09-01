@@ -36,9 +36,9 @@ void vector_append(Vector *vec, Cell *item)
 */
 Cell *vector_pop(Vector *vec, uint32_t index) 
 {
-    if (index < 0 || index >= vec->used) 
+    if (index >= vec->used) 
     {
-        printf("Index %ld out of range\n", index);
+        printf("Index %d out of range\n", index);
         exit(EXIT_FAILURE);
     }
 

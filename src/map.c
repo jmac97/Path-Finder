@@ -13,30 +13,30 @@ static double values[MAX_CELL_AMOUNT]; // t_reals are doubles
 // structs for mjson parsing
 static const struct json_attr_t canvas_attr[] = 
 {
-    {"width", t_ignore, NULL},
-    {"height", t_ignore, NULL},
+    {"width", t_ignore, .dflt = {0}},
+    {"height", t_ignore, .dflt = {0}},
     {NULL},
 };
 
 static const struct json_attr_t tileset_attr[] = 
 {
-    {"name", t_ignore, NULL},
-    {"image", t_ignore, NULL},
-    {"imagewidth", t_ignore, NULL},
-    {"imageheight", t_ignore, NULL},
-    {"tilewidth", t_ignore, NULL},
-    {"tileheight", t_ignore, NULL},
+    {"name", t_ignore, .dflt = {0}},
+    {"image", t_ignore, .dflt = {0}},
+    {"imagewidth", t_ignore, .dflt = {0}},
+    {"imageheight", t_ignore, .dflt = {0}},
+    {"tilewidth", t_ignore, .dflt = {0}},
+    {"tileheight", t_ignore, .dflt = {0}},
     {NULL},
 };
 
 static const struct json_attr_t map_attr[] = 
 {
-    {"name", t_ignore, NULL},
-    {"tileset", t_ignore, NULL},
+    {"name", t_ignore, .dflt = {0}},
+    {"tileset", t_ignore, .dflt = {0}},
     {"data", t_array, .addr.array.element_type = t_real,
                     .addr.array.maxlen = 1024,
                     .addr.array.count = &map_count,
-                    .addr.array.arr.reals = values},
+                    .addr.array.arr.reals = {values}},
   {NULL},
 };
 
@@ -90,7 +90,7 @@ void map_extract(float map[MAX_GRID][MAX_GRID])
     if (status != 0)
     {
         // print mjson error message
-        printf("%s\n", json_error_string(status), json_count);
+        printf("%s\n", json_error_string(status));
     }
 
     uint16_t value_index = 0;
@@ -119,33 +119,54 @@ void map_extract(float map[MAX_GRID][MAX_GRID])
 */
 void map_get_positions(float map[MAX_GRID][MAX_GRID], uint8_t start[2], uint8_t end[2])
 {
+    int temp;
     printf("x coordinate for start: ");
-    scanf("%d", &start[0]);
-    if (start[0] >= MAX_GRID)
+    scanf("%d", &temp);
+    if (temp >= MAX_GRID)
     {
-        start[0] = MAX_GRID - 1;
+        temp = MAX_GRID - 1;
     }
+    else if (temp < 0)
+    {
+        temp = 0;
+    }
+    start[0] = temp;
 
     printf("y coordinate for start: ");
-    scanf("%d", &start[1]);
-    if (start[1] >= MAX_GRID)
+    scanf("%d", &temp);
+    if (temp >= MAX_GRID)
     {
-        start[1] = MAX_GRID - 1;
+        temp = MAX_GRID - 1;
     }
+    else if (temp < 0)
+    {
+        temp = 0;
+    }
+    start[1] = temp;
 
     printf("x coordinate for end: ");
-    scanf("%d", &end[0]);
-    if (end[0] >= MAX_GRID)
+    scanf("%d", &temp);
+    if (temp >= MAX_GRID)
     {
-        end[0] = MAX_GRID - 1;
+        temp = MAX_GRID - 1;
     }
+    else if (temp < 0)
+    {
+        temp = 0;
+    }
+    end[0] = temp;
 
     printf("y coordinate for end: ");
-    scanf("%d", &end[1]);
-    if (end[1] >= MAX_GRID)
+    scanf("%d", &temp);
+    if (temp >= MAX_GRID)
     {
-        end[1] = MAX_GRID - 1;
+        temp = MAX_GRID - 1;
     }
+    else if (temp < 0)
+    {
+        temp = 0;
+    }
+    end[1] = temp;
 
     if (!memcmp(start, end, 2))
     {

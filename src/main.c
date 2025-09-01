@@ -7,7 +7,7 @@
 #include "../inc/vector.h"
 
 
-int main(int argc, char *argv[])
+int main(void)
 {
     static float grid_values[MAX_GRID][MAX_GRID];
     static uint8_t start[2];
