@@ -244,6 +244,7 @@ Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t 
     vector_free(&children);
   }
 
+    printf("Path cannot be made.");
     free(start_node);
     free(end_node);
     vector_free(&open_list);

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "../inc/map.h"
 #include <stdint.h>
+#include <string.h>
 
 // variables for mjson parsing
 static int json_count;
@@ -144,6 +145,15 @@ void map_get_positions(float map[MAX_GRID][MAX_GRID], uint8_t start[2], uint8_t 
     if (end[1] >= MAX_GRID)
     {
         end[1] = MAX_GRID - 1;
+    }
+
+    if (!memcmp(start, end, 2))
+    {
+        printf("Positions can't match. Using default values [0,0] and [31,31] for start and end");
+        start[0] = 0;
+        start[1] = 0;
+        end[0] = 31;
+        end[0] = 31;
     }
 
     map[start[1]][start[0]] = START;
