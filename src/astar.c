@@ -12,7 +12,13 @@ enum Location
     DOWN
 };
 
-
+/*
+* @brief Get the child's position
+* 
+* @param[in] loc            Position relative to parent (LEFT, RIGHT, UP, DOWN)
+* @param[in] vec            Pointer to vector of child cells
+ *@param[in] cuurrent       Pointer to the parent cell
+*/
 static void astar_get_child(uint8_t loc, Vector *vec, Cell *current)
 {
     Cell *child = malloc(sizeof(Cell));
@@ -57,8 +63,17 @@ static void astar_get_child(uint8_t loc, Vector *vec, Cell *current)
 }
 
 
+/*
+* @brief Gather the 4 surrounding children of give square
+* 
+* @param[in] current        Pointer to current cell
+* @param[in] vec            Pointer to vector of child cells
+ *@param[in] map            2D array of the current map
+*/
 static void astar_populate_children(Cell *current, Vector *vec, float map[MAX_GRID][MAX_GRID])
 {
+    // Get the four children, but check if they're walkable or off the grid
+
     if (current->y > 0 && map[current->y-1][current->x] != MOUNTAIN)
     {
         astar_get_child(DOWN, vec, current);

@@ -1,5 +1,7 @@
-# Path-Finder
-Getting a guy from one place to another
+# Path Finder
+Getting a guy from one place to another.
+
+Takes in a JSON file based on [Risky Lab outputs](https://riskylab.com/tilemap/#), a start position, and an end postion to implement A* in the terminal.
 
 ## Example
 ### Normal Run
@@ -19,9 +21,81 @@ Use Risky Labs to make compatible maps: https://riskylab.com/tilemap/#
     * Maps can only be 32x32
     * Only accept -1 (nothing) and 3 (mountain)
 
-1. gcc main.c mjson.c map.c vector.c astar.c -o pathfinder
-2. run pathfind.exe
+1. Build:
+    * use make or:
+    * gcc main.c mjson.c map.c vector.c astar.c -o pathfinder
+2. run pathfinder.exe
 3. follow command line instructions
+### Structure
+#### Map
+Use the functions here to extract and display the map.
+
+##### Extracting maps from a JSON
+```C 
+/*
+* @brief Gets the grid values from a JSON file
+* 
+* @parm[in] map         A 32x32 array, extracted values placed here
+*/
+void map_extract(float map[MAX_GRID][MAX_GRID])
+```
+##### Getting user start and end positions
+```C
+/*
+* @brief Gets the start and end positions from user
+* 
+* @param[in] map        A 32x32 array, positions placed here
+* @param[in] start      Array of values for start x,y position
+* @param[in] end        Array of values for end x,y position
+*/
+void map_get_positions(float map[MAX_GRID][MAX_GRID], uint8_t start[2], uint8_t end[2]);
+```
+##### Printing the map
+```C
+/*
+* @brief Prints out formatted map in console
+* 
+* @parm[in] map         A 32x32 array of map
+*/
+void map_print(float map[MAX_GRID][MAX_GRID]);
+```
+#### Vector
+Used in the A* implementation. Has typical init, append, pop, and free functions. Here vector is a dynamic array of Cells:
+```C
+struct Vector
+{
+    Cell **array;
+    size_t used;
+    size_t size;
+}__attribute__((packed));
+```
+#### A*
+Cells are defined as:
+```C
+struct Cell
+{
+  uint8_t x;
+  uint8_t y;
+  float f;
+  float g;
+  float h;
+  Cell *parent;
+}__attribute__((packed));
+```
+A* function that returns the found path:
+```C
+/*
+* @brief Create a path from start to end position using A* 
+* 
+* @param[in] map        Input map of 32x32 grid
+* @param[in] start      Input start position, where [x,y] is [0,1]
+* @param[in] end        Input end position, where [x,y] is [0,1]
+* @param[in] success    Will equal 1 on finding path, 0 if no path found
+*
+* @return   Vector with the final path populated
+*/
+Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t *end, bool *success);
+```
 
 ## Requirements
 1. Create a path for the "battle unit" from starting position to end position.
