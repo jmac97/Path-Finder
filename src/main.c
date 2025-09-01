@@ -8,15 +8,6 @@ static uint8_t start[2];
 static uint8_t end[2];
 
 
-
-
-
-
-
-// Get input JSON file
-// Get input for start and end positions
-// Parse/determine walkable and not walkable areas - lib?
-// Print starting map
 // ~Path finding algo~ - what are the options out there
 // Print map with path to traverse
 

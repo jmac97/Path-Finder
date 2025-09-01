@@ -27,4 +27,14 @@ Getting a guy from one place to another
 
 
 ## JSON Parsing
+* I looked at the C librarys listed here: https://www.json.org/json-en.html
+* I wanted to find something small, easy to port, and easy to use.
+* I started using jsmn:
+    * Small, simple, portable
+    * Doesn't require me to do anything to install, just add .h file
+    * Found it ok to use, it was slightly annoying to extract data
+* I next on my "to try" list was mjson: 
+    * Hits all the requiurements
+    * Puts data into structs and arrays, making it easier to parse through and handle data
+
 ## Pathfinding Algorithms

@@ -2,12 +2,14 @@
 #include "../inc/map.h"
 #include <stdint.h>
 
+// variables for mjson parsing
 static int json_count;
 static int map_count;
 static int tile_count;
-char name_of_thing[100];
-double values[2048];
 
+static double values[MAX_CELL_AMOUNT]; // t_reals are doubles
+
+// structs for mjson parsing
 static const struct json_attr_t canvas_attr[] = {
   {"width", t_ignore, NULL},
   {"height", t_ignore, NULL},
@@ -49,7 +51,9 @@ static const struct json_attr_t json_attr[] =
 };
 
 
-
+/*
+* @brief Gets the grid values from a JSON file
+*/
 bool map_extract(float map[32][32])
 {
     char path[50];
@@ -60,7 +64,7 @@ bool map_extract(float map[32][32])
 
     if (fp == NULL)
     {
-        printf("File does not exist or can't be opened");
+        printf("File does not exist or can't be opened.");
         return 0;
     }
 
@@ -70,7 +74,6 @@ bool map_extract(float map[32][32])
 
     char *buffer = (char *)malloc(file_size + 1);
     if (buffer == NULL) {
-        // Handle memory allocation error
         printf("memory error");
         fclose(fp);
         return 0;
@@ -79,18 +82,19 @@ bool map_extract(float map[32][32])
     fread(buffer, 1, file_size, fp);
     fclose(fp);
 
-    int i, status = 0;
+    uint8_t status = json_read_object(buffer, json_attr, NULL);
+    if (status != 0)
+    {
+        // print mjson error message
+        printf("%s\n", json_error_string(status), json_count);
+    }
 
-    status = json_read_object(buffer, json_attr, NULL);
-
-    printf("%s,  %d maps\n", json_error_string(status), json_count);
-
-    i = 0;
+    uint16_t value_index = 0;
     for (uint8_t y = 0; y < 32; y++)
     {
       for (uint8_t x = 0; x < 32; x++)
       {
-        map[y][x] = values[i];
+        map[y][x] = values[value_index];
 
         // remove anything that's not expected terrain 
         if (map[y][x] != -1.0f)
@@ -101,13 +105,16 @@ bool map_extract(float map[32][32])
             }
         }
 
-        i++;
+        value_index++;
       }
     }
 
     return 1;
 }
 
+/*
+* @brief Gets the start and end positions from user
+*/
 void map_get_positions(float map[32][32], uint8_t start[2], uint8_t end[2])
 {
     printf("x coordinate for start: ");
@@ -142,10 +149,13 @@ void map_get_positions(float map[32][32], uint8_t start[2], uint8_t end[2])
     map[end[1]][end[0]] = 0.5f;
 }
 
+/*
+* @brief Prints out formatted map in console
+*/
 bool map_print(float map[32][32])
 {
     printf("\n");
-    
+
     for (uint16_t y = 0; y < MAX_GRID; y++)
     {
       for (uint8_t x = 0; x < MAX_GRID; x++)
