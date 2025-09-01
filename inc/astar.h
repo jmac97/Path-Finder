@@ -20,6 +20,6 @@ struct Cell
   Cell *parent;
 }__attribute__((packed));
 
-Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t *end);
+Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t *end, bool *success);
 
 #endif /* ASTAR_H */

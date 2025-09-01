@@ -1,9 +1,27 @@
 # Path-Finder
 Getting a guy from one place to another
 
+## Example
+### Normal Run
+![Image](/outputs/example-half1.png)
+![Image](/outputs/example-half2.png)
+
+From Github Link:
+![Image](/outputs/example-half12.png)
+![Image](/outputs/example-half22.png)
+
+### Enclosed Run
+![Image](/outputs/example-enclosed.png)
+
 ## Build Info
 ### Use Instructions
-### Structure
+Use Risky Labs to make compatible maps: https://riskylab.com/tilemap/#
+    * Maps can only be 32x32
+    * Only accept -1 (nothing) and 3 (mountain)
+
+1. gcc main.c mjson.c map.c vector.c astar.c -o pathfinder
+2. run pathfind.exe
+3. follow command line instructions
 
 ## Requirements
 1. Create a path for the "battle unit" from starting position to end position.
@@ -34,7 +52,13 @@ Getting a guy from one place to another
     * Doesn't require me to do anything to install, just add .h file
     * Found it ok to use, it was slightly annoying to extract data
 * I next on my "to try" list was mjson: 
-    * Hits all the requiurements
+    * Meets all my ~~desires~~ requirements
     * Puts data into structs and arrays, making it easier to parse through and handle data
 
 ## Pathfinding Algorithms
+* Read up on three common algorithms: Breadth First Search, Dijkstra’s Algorithm, and A*
+* A* seemed best of the three for this as it has a combination of their strengths (shortest path + heuristics)
+    * Will use Manhattan distance since units can only go up/down and left/right
+* Need at least dynamic arrays to store and sort Cells
+    * Here is when I start regretting not quiuckly brushing up on C++ so I can use its built-in data structures (priority queues, vectors, etc)
+ 

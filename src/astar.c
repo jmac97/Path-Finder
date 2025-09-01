@@ -83,7 +83,7 @@ static void astar_populate_children(Cell *current, Vector *vec, float map[MAX_GR
 /*
 * @brief Create a path from start to end position using A* 
 */
-Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t *end)
+Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t *end, bool *success)
 {
 #if PRINT_DEBUG
     printf("Creating start node at [%d, %d]\n", start[0], start[1]);
@@ -171,6 +171,7 @@ Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t 
         free(end_node);
         vector_free(&open_list);
         vector_free(&closed_list);
+        *success = 1;
         return path;
     }
 
@@ -252,5 +253,6 @@ Vector astar_create_path(float map[MAX_GRID][MAX_GRID], uint8_t *start, uint8_t 
     
     Vector empty;
     vector_init(&empty, 0);
+    *success = 0;
     return empty;
 }

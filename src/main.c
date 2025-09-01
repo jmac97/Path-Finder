@@ -6,33 +6,43 @@
 #include "../inc/astar.h"
 #include "../inc/vector.h"
 
-static float grid_values[MAX_GRID][MAX_GRID];
-static uint8_t start[2];
-static uint8_t end[2];
-
 
 int main(int argc, char *argv[])
 {
+    static float grid_values[MAX_GRID][MAX_GRID];
+    static uint8_t start[2];
+    static uint8_t end[2];
+    static bool path_made = false;
+
     map_extract(grid_values);
     map_get_positions(grid_values, start, end);
     map_print(grid_values);
 
     printf("\n\n\n");
 
-    Vector print = astar_create_path(grid_values, start, end);
-    for (uint32_t i = 1; i < print.used-1; i++)
+    Vector print = astar_create_path(grid_values, start, end, &path_made);
+
+    if (path_made)
     {
-        if (grid_values[print.array[i]->y][print.array[i]->x] == MOUNTAIN)
-        {
-            printf("You messed up\n\n");
-        }
-        else
+        for (uint32_t i = 1; i < print.used-1; i++)
         {
             grid_values[print.array[i]->y][print.array[i]->x] = PATH;
         }
-    }
 
-    map_print(grid_values);
+        printf("Path coordinates: \n");
+        uint32_t count = 0;
+        for (uint32_t i = print.used-2; i > 0; i--)
+        {
+            printf("[%d, %d], ", print.array[i]->x, print.array[i]->y);
+            count++;
+            if (count % 10 == 0)
+            {
+                printf("\n");
+            }
+        }
+
+        map_print(grid_values);
+    }
 
     vector_free(&print);
 
