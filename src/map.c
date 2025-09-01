@@ -57,7 +57,7 @@ static const struct json_attr_t json_attr[] =
 /*
 * @brief Gets the grid values from a JSON file
 */
-void map_extract(float map[32][32])
+void map_extract(float map[MAX_GRID][MAX_GRID])
 {
     char path[50];
     printf("enter path to json file: ");
@@ -100,11 +100,11 @@ void map_extract(float map[32][32])
         map[y][x] = values[value_index];
 
         // remove anything that's not expected terrain 
-        if (map[y][x] != -1.0f)
+        if (map[y][x] != FLAT_GROUND)
         {
-            if (map[y][x] != 3.0f)
+            if (map[y][x] != MOUNTAIN)
             {
-                map[y][x] = -1.0f;
+                map[y][x] = FLAT_GROUND;
             }
         }
 
@@ -116,7 +116,7 @@ void map_extract(float map[32][32])
 /*
 * @brief Gets the start and end positions from user
 */
-void map_get_positions(float map[32][32], uint8_t start[2], uint8_t end[2])
+void map_get_positions(float map[MAX_GRID][MAX_GRID], uint8_t start[2], uint8_t end[2])
 {
     printf("x coordinate for start: ");
     scanf("%d", &start[0]);
@@ -146,8 +146,8 @@ void map_get_positions(float map[32][32], uint8_t start[2], uint8_t end[2])
         end[1] = MAX_GRID - 1;
     }
 
-    map[start[1]][start[0]] = 8.1f;
-    map[end[1]][end[0]] = 0.5f;
+    map[start[1]][start[0]] = START;
+    map[end[1]][end[0]] = END;
 }
 
 /*
@@ -162,23 +162,23 @@ void map_print(float map[32][32])
         for (uint8_t x = 0; x < MAX_GRID; x++)
         {
             float square = map[y][x];
-            if (square == 3)
+            if (square == MOUNTAIN)
             {
                 printf("\033[48;5;94m%1s \033[m", "#");
             }
-            else if (square == -1.0f)
+            else if (square == FLAT_GROUND)
             {
                 printf("\033[48;5;34m%1s \33[m", "-");
             }
-            else if (square == 0.5f)
+            else if (square == END)
             {
                 printf("\033[38;5;200m%1s \033[m", "Z");
             }
-            else if (square == 8.1f)
+            else if (square == START)
             {
                 printf("\033[38;5;200m%1s \033[m", "A");
             }
-            else if (square == 5.0f)
+            else if (square == PATH)
             {
                 printf("\033[41m%1s \033[m", "*");
             }
