@@ -54,7 +54,7 @@ static const struct json_attr_t json_attr[] =
 /*
 * @brief Gets the grid values from a JSON file
 */
-bool map_extract(float map[32][32])
+void map_extract(float map[32][32])
 {
     char path[50];
     printf("enter path to json file: ");
@@ -65,7 +65,7 @@ bool map_extract(float map[32][32])
     if (fp == NULL)
     {
         printf("File does not exist or can't be opened.");
-        return 0;
+        exit(EXIT_FAILURE);
     }
 
     fseek(fp, 0, SEEK_END);
@@ -76,7 +76,7 @@ bool map_extract(float map[32][32])
     if (buffer == NULL) {
         printf("memory error");
         fclose(fp);
-        return 0;
+        exit(EXIT_FAILURE);
     }
 
     fread(buffer, 1, file_size, fp);
@@ -108,8 +108,6 @@ bool map_extract(float map[32][32])
         value_index++;
       }
     }
-
-    return 1;
 }
 
 /*
@@ -152,7 +150,7 @@ void map_get_positions(float map[32][32], uint8_t start[2], uint8_t end[2])
 /*
 * @brief Prints out formatted map in console
 */
-bool map_print(float map[32][32])
+void map_print(float map[32][32])
 {
     printf("\n");
 

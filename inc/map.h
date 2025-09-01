@@ -11,14 +11,13 @@
 * @brief Gets the grid values from a JSON file
 * 
 * @parm[in] map         A 32x32 array, extracted values placed here
-* @return               0 if error, 1 if not
 */
-bool map_extract(float map[32][32]);
+void map_extract(float map[32][32]);
 
 /*
 * @brief Gets the start and end positions from user
 * 
-* @parm[in] map         A 32x32 array, positions placed here
+* @param[in] map        A 32x32 array, positions placed here
 * @param[in] start      Array of values for start x,y position
 * @param[in] end        Array of values for end x,y position
 */
@@ -29,6 +28,6 @@ void map_get_positions(float map[32][32], uint8_t start[2], uint8_t end[2]);
 * 
 * @parm[in] map         A 32x32 array of map
 */
-bool map_print(float map[32][32]);
+void map_print(float map[32][32]);
 
 #endif /* MAP_H */
