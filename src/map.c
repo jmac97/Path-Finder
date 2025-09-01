@@ -44,11 +44,11 @@ static const struct json_attr_t json_attr[] =
 {
     {"layers", t_array, .addr.array.element_type = t_object,
                         .addr.array.arr.objects.subtype = map_attr,
-                        .addr.array.maxlen = 10000,
+                        .addr.array.maxlen = 3,
                         .addr.array.count = &json_count},
     {"tilesets", t_array, .addr.array.element_type = t_object,
                         .addr.array.arr.objects.subtype = tileset_attr,
-                        .addr.array.maxlen = 1000,
+                        .addr.array.maxlen = 6,
                         .addr.array.count = &tile_count},
     {"canvas", t_object, .addr.attrs = canvas_attr},
     {NULL},
@@ -60,7 +60,7 @@ static const struct json_attr_t json_attr[] =
 */
 void map_extract(float map[MAX_GRID][MAX_GRID])
 {
-    char path[50];
+    char path[200];
     printf("enter path to json file: ");
     scanf("%s", path);
 
