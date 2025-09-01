@@ -8,9 +8,9 @@
 */
 void vector_init(Vector *vec, size_t size)
 {
-  vec->array = malloc(size * sizeof(Cell*));
-  vec->used = 0;
-  vec->size = size;
+    vec->array = malloc(size * sizeof(Cell*));
+    vec->used = 0;
+    vec->size = size;
 }
 
 
@@ -19,14 +19,14 @@ void vector_init(Vector *vec, size_t size)
 */
 void vector_append(Vector *vec, Cell *item)
 {
-  if (vec->used == vec->size)
-  {
-    vec->size *= 2;
-    vec->array = realloc(vec->array, vec->size * sizeof(Cell*));
-  }
+    if (vec->used == vec->size)
+    {
+        vec->size *= 2;
+        vec->array = realloc(vec->array, vec->size * sizeof(Cell*));
+    }
 
-  vec->array[vec->used] = item;
-  vec->used++;
+    vec->array[vec->used] = item;
+    vec->used++;
 }
 
 
@@ -59,7 +59,7 @@ Cell *vector_pop(Vector *vec, uint32_t index)
 */
 void vector_free(Vector *vec)
 {
-  free(vec->array);
-  vec->array = NULL;
-  vec->used = vec->size = 0;
+    free(vec->array);
+    vec->array = NULL;
+    vec->used = vec->size = 0;
 }

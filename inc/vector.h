@@ -7,9 +7,9 @@
 
 typedef struct
 {
-  Cell **array;
-  size_t used;
-  size_t size;
+    Cell **array;
+    size_t used;
+    size_t size;
 } Vector;
 
 

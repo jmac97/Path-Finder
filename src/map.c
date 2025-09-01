@@ -10,26 +10,29 @@ static int tile_count;
 static double values[MAX_CELL_AMOUNT]; // t_reals are doubles
 
 // structs for mjson parsing
-static const struct json_attr_t canvas_attr[] = {
-  {"width", t_ignore, NULL},
-  {"height", t_ignore, NULL},
-  {NULL},
+static const struct json_attr_t canvas_attr[] = 
+{
+    {"width", t_ignore, NULL},
+    {"height", t_ignore, NULL},
+    {NULL},
 };
 
-static const struct json_attr_t tileset_attr[] = {
-  {"name", t_ignore, NULL},
-  {"image", t_ignore, NULL},
-  {"imagewidth", t_ignore, NULL},
-  {"imageheight", t_ignore, NULL},
-  {"tilewidth", t_ignore, NULL},
-  {"tileheight", t_ignore, NULL},
-  {NULL},
+static const struct json_attr_t tileset_attr[] = 
+{
+    {"name", t_ignore, NULL},
+    {"image", t_ignore, NULL},
+    {"imagewidth", t_ignore, NULL},
+    {"imageheight", t_ignore, NULL},
+    {"tilewidth", t_ignore, NULL},
+    {"tileheight", t_ignore, NULL},
+    {NULL},
 };
 
-static const struct json_attr_t map_attr[] = {
-  {"name", t_ignore, NULL},
-  {"tileset", t_ignore, NULL},
-  {"data", t_array, .addr.array.element_type = t_real,
+static const struct json_attr_t map_attr[] = 
+{
+    {"name", t_ignore, NULL},
+    {"tileset", t_ignore, NULL},
+    {"data", t_array, .addr.array.element_type = t_real,
                     .addr.array.maxlen = 1024,
                     .addr.array.count = &map_count,
                     .addr.array.arr.reals = values},
@@ -38,16 +41,16 @@ static const struct json_attr_t map_attr[] = {
 
 static const struct json_attr_t json_attr[] = 
 {
-  {"layers", t_array, .addr.array.element_type = t_object,
-                      .addr.array.arr.objects.subtype = map_attr,
-                      .addr.array.maxlen = 10000,
-                      .addr.array.count = &json_count},
-  {"tilesets", t_array, .addr.array.element_type = t_object,
-                      .addr.array.arr.objects.subtype = tileset_attr,
-                      .addr.array.maxlen = 1000,
-                      .addr.array.count = &tile_count},
-  {"canvas", t_object, .addr.attrs = canvas_attr},
-  {NULL},
+    {"layers", t_array, .addr.array.element_type = t_object,
+                        .addr.array.arr.objects.subtype = map_attr,
+                        .addr.array.maxlen = 10000,
+                        .addr.array.count = &json_count},
+    {"tilesets", t_array, .addr.array.element_type = t_object,
+                        .addr.array.arr.objects.subtype = tileset_attr,
+                        .addr.array.maxlen = 1000,
+                        .addr.array.count = &tile_count},
+    {"canvas", t_object, .addr.attrs = canvas_attr},
+    {NULL},
 };
 
 
@@ -156,37 +159,37 @@ void map_print(float map[32][32])
 
     for (uint16_t y = 0; y < MAX_GRID; y++)
     {
-      for (uint8_t x = 0; x < MAX_GRID; x++)
-      {
-        float square = map[y][x];
-        if (square == 3)
+        for (uint8_t x = 0; x < MAX_GRID; x++)
         {
-          printf("\033[48;5;94m%1s \033[m", "#");
-        }
-        else if (square == -1.0f)
-        {
-          printf("\033[48;5;34m%1s \33[m", "-");
-        }
-        else if (square == 0.5f)
-        {
-          printf("\033[38;5;200m%1s \033[m", "Z");
-        }
-        else if (square == 8.1f)
-        {
-          printf("\033[38;5;200m%1s \033[m", "A");
-        }
-        else if (square == 5.0f)
-        {
-          printf("\033[41m%1s \033[m", "*");
-        }
-        else
-        {
-          // other values already removed, shouldn't execute
-          printf("\n\nUnknown value in map: %.1f [%d, %d]\n\n", map[y][x], x, y);
+            float square = map[y][x];
+            if (square == 3)
+            {
+                printf("\033[48;5;94m%1s \033[m", "#");
+            }
+            else if (square == -1.0f)
+            {
+                printf("\033[48;5;34m%1s \33[m", "-");
+            }
+            else if (square == 0.5f)
+            {
+                printf("\033[38;5;200m%1s \033[m", "Z");
+            }
+            else if (square == 8.1f)
+            {
+                printf("\033[38;5;200m%1s \033[m", "A");
+            }
+            else if (square == 5.0f)
+            {
+                printf("\033[41m%1s \033[m", "*");
+            }
+            else
+            {
+                // other values already removed, shouldn't execute
+                printf("\n\nUnknown value in map: %.1f [%d, %d]\n\n", map[y][x], x, y);
+            }
         }
 
-      }
-      printf("\n");
+        printf("\n");
     }
 
     printf("\n\n\n");
