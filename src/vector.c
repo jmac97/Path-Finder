@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../inc/vector.h"
+#include "../inc/astar.h"
 
 
 

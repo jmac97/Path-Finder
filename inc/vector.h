@@ -5,12 +5,15 @@
 #include <stdlib.h>
 #include "astar.h"
 
-typedef struct
+
+typedef struct Cell Cell;
+typedef struct Vector Vector;
+struct Vector
 {
     Cell **array;
     size_t used;
     size_t size;
-} Vector;
+}__attribute__((packed));
 
 
 /*
