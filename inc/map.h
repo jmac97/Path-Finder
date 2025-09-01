@@ -31,4 +31,4 @@ void map_get_positions(float map[32][32], uint8_t start[2], uint8_t end[2]);
 */
 bool map_print(float map[32][32]);
 
-#endif
+#endif /* MAP_H */

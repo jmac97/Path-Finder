@@ -2,7 +2,6 @@
     "layers": [
         {
             "name": "background",
-            "tileset": "test",
             "data": [
                 -1,
                 -1,
