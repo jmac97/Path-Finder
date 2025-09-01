@@ -10,7 +10,7 @@
 #define MOUNTAIN        3.0f
 #define FLAT_GROUND     -1.0f
 #define PATH            5
-#define START           8.1f
+#define START           8.3f
 #define END             0.5f 
 
 /*
